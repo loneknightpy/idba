@@ -1,0 +1,7 @@
+#! /bin/bash
+
+velveth $1 $2 -shortPaired $3 
+velvetg $1 -min_contig_lgth 100 -exp_cov auto -cov_cutoff auto # -cov_cutoff 9 -read_trkg yes -exp_cov 20 #-ins_length 250 -exp_cov auto #-scaffolding yes
+
+#bin/rawN50 < $1/contigs.fa
+#script/validate $1/contigs.fa $4 95 100

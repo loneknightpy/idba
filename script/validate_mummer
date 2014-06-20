@@ -1,0 +1,9 @@
+#! /usr/bin/perl
+
+$basedir=`dirname $0`;
+chop($basedir);
+
+system "nucmer --prefix $ARGV[1].mummer $ARGV[0] $ARGV[1]";
+system "show-coords $ARGV[1].mummer.delta > $ARGV[1].mummer.coords";
+system "$basedir/../bin/validate_contigs_mummer $ARGV[0] $ARGV[1] --min_contig $ARGV[3] --similar $ARGV[2]";
+

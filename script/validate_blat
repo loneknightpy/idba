@@ -1,0 +1,8 @@
+#! /usr/bin/perl
+
+$basedir=`dirname $0`;
+chop($basedir);
+
+#system "blat -noHead -tileSize=18 -minMatch=4 $ARGV[0] $ARGV[1] $ARGV[1].blat";
+system "blat -noHead $ARGV[0] $ARGV[1] $ARGV[1].blat";
+system "$basedir/../bin/validate_contigs_blat $ARGV[0] $ARGV[1] --min_contig $ARGV[3] --similar $ARGV[2]";

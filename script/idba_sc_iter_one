@@ -1,0 +1,17 @@
+#! /usr/bin/perl
+
+$read_file= $ARGV[0];
+$output= $ARGV[1];
+
+$cmd = "bin/idba_sc -r $read_file -o $output --mink 60 --maxk 100 --min_count 2 --min_support 2 --min_pairs 10 |tee $output.txt";
+print $cmd, "\n";
+system($cmd);
+
+$cmd = "bin/correct -r $read_file -o $output";
+print $cmd, "\n";
+system($cmd);
+
+$cmd = "bin/idba_sc -r $output/corrected-reads.fa -o $output-2 --mink 20 |tee $output-2.txt";
+print $cmd, "\n";
+system($cmd);
+

@@ -1,0 +1,14 @@
+#! /bin/bash
+
+#velveth $1 $2 -shortPaired $3 
+#velvetg $1 -min_contig_lgth 100 -exp_cov auto -cov_cutoff auto # -cov_cutoff 9 -read_trkg yes -exp_cov 20 #-ins_length 250 -exp_cov auto #-scaffolding yes
+
+bwa index -a bwtsw $4
+fa2fq $3 $3.fq
+split_fq $3.fq $3.1.fq $3.2.fq
+bwa aln $4 $3.1.fq > $3.1.sai
+bwa aln $4 $3.2.fq > $3.2.sai
+bwa sampe $4 $3.1.sai $3.2.sai $3.1.fq $3.2.fq > $3.sam
+velveth $1 $2 -reference $4 -short -sam $3.sam
+velvetg $1 -min_contig_lgth 100 -exp_cov auto -cov_cutoff auto 
+

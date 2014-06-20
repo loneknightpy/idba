@@ -1,0 +1,23 @@
+#! /usr/bin/perl
+
+$read_file= $ARGV[0];
+$output= $ARGV[1];
+$min_count_first = $ARGV[2];
+$min_support_first = $ARGV[3];
+$min_count = $ARGV[4];
+$min_support = $ARGV[5];
+
+#$m = $min_count * 2;
+#$f = $min_support * 2;
+$cmd = "bin/idba_sc_fast -r $read_file -o $output --min_count $min_count_first --min_support $min_support_first --min_pairs 10 |tee $output.txt";
+print $cmd, "\n";
+system($cmd);
+
+$cmd = "bin/correct -r $read_file -o $output";
+print $cmd, "\n";
+system($cmd);
+
+$cmd = "bin/idba_sc_fast -r $output/corrected-reads.fa -o $output-2 --min_count $min_count --min_support $min_support |tee $output-2.txt";
+print $cmd, "\n";
+system($cmd);
+

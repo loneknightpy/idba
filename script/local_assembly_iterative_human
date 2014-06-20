@@ -1,0 +1,82 @@
+#! /usr/bin/perl 
+
+$reads = $ARGV[0];
+$directory = $ARGV[1];
+$min_contig = 150;
+#$local_maxk = 120;
+$long_read_file = $directory . "/long_reads.fa";
+$mink = 30;
+$maxk = 100;
+$step = 10;
+
+$cmd = "mkdir $directory";
+print $cmd, "\n";
+system ($cmd);
+
+$cmd = "bin/idba -r $reads -o $directory --mink $mink --maxk $mink";
+print $cmd, "\n";
+system ($cmd);
+
+$cmd = "cat $directory/contig.fa $directory/contig.fa > $long_read_file";
+print $cmd, "\n";
+system ($cmd);
+
+$nextk = $mink + $step;
+$cmd = "mkdir $directory/$nextk ";
+print $cmd, "\n";
+system ($cmd);
+
+$cmd = "cat $directory/contig.fa > $directory/$nextk/graph.fa";
+print $cmd, "\n";
+system ($cmd);
+
+for ($kmer = $mink + $step; $kmer <= $maxk; $kmer += $step)
+{
+	$old_kmer = $kmer - $step;
+	$cmd = "bin/iterate -r $reads -l $long_read_file -o $directory/$kmer --mink $old_kmer --maxk $kmer";
+	print $cmd, "\n";
+	system ($cmd);
+
+	$cmd = "bin/filter_sequences $directory/$kmer/contig.fa $directory/$kmer/contig-filtered.fa --min_contig $min_contig";
+	print $cmd, "\n";
+	system ($cmd);
+
+	$similar = $kmer * 1.0 / 100;
+	$similar = ($similar > 0.5) ? $similar : 0.5;
+	$similar = ($similar < 0.95) ? $similar : 0.95;
+
+	$cmd = "bin/align $directory/$kmer/contig-filtered.fa $reads $directory/$kmer/align --similar $similar";
+	print $cmd, "\n";
+	system ($cmd);
+
+	$cmd = "bin/local_assembly -r $reads -o $directory/$kmer";
+	print $cmd, "\n";
+	system ($cmd);
+
+	$cmd = "cat $directory/$kmer/local-contig.fa $directory/$kmer/local-contig.fa > $long_read_file";
+	print $cmd, "\n";
+	system ($cmd);
+
+	$nextk = $kmer + $step;
+	$cmd = "mkdir $directory/$nextk ";
+	print $cmd, "\n";
+	system ($cmd);
+
+	$cmd = "cat $directory/$kmer/contig.fa > $directory/$nextk/graph.fa";
+	print $cmd, "\n";
+	system ($cmd);
+}
+
+#$cmd = "bin/idba -l $long_read_file -o $directory/final --min_count 0 --min_cover 0 --min_support 1 --mink $maxk --maxk $local_maxk";
+#print $cmd, "\n";
+#system ($cmd);
+#
+$cmd = "bin/scaffold -r $reads  -o $directory/$maxk ";
+print $cmd, "\n";
+system ($cmd);
+
+$cmd = "bin/local_scaffold -r $reads  -o $directory/$maxk ";
+print $cmd, "\n";
+system ($cmd);
+
+

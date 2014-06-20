@@ -1,0 +1,39 @@
+max_rd_len=100
+[LIB]
+avg_ins=500
+#if sequence needs to be reversed 
+reverse_seq=0
+#in which part(s) the reads are used
+asm_flags=3
+#in which order the reads are used while scaffolding
+rank=1
+#fastq file for read 1 
+#q1=../assembler-0.9/data/human-tran/Human_transcriptome_1.fq
+#fastq file for read 2 always follows fastq file for read 1
+#q2=../assembler-0.9/data/human-tran/Human_transcriptome_2.fq
+#q2=/path/**LIBNAMEA**/fastq_read_2.fq
+#fasta file for read 1 
+#f1=/path/**LIBNAMEA**/fasta_read_1.fa
+#fastq file for read 2 always follows fastq file for read 1
+#f2=/path/**LIBNAMEA**/fasta_read_2.fa
+#fastq file for single reads
+#q=/path/**LIBNAMEA**/fastq_read_single.fq
+#fasta file for single reads
+#f=/path/**LIBNAMEA**/fasta_read_single.fa
+#p=data/human-hg18/human-all.reads-mate-30-0.01-75
+#p=data/Ecoli/Ecoli.reads-mate-30-0.01-100-500
+#a single fasta file for paired reads
+#p=/path/**LIBNAMEA**/pairs_in_one_file.fa
+#[LIB]
+#avg_ins=2000
+#reverse_seq=1
+#asm_flags=2
+#rank=2
+#q1=/path/**LIBNAMEB**/fastq_read_1.fq
+#q2=/path/**LIBNAMEB**/fastq_read_2.fq
+#q=/path/**LIBNAMEB**/fastq_read_single.fq
+#f=/path/**LIBNAMEB**/fasta_read_single.fa
+
+#p=data/Ecoli-K12/ecoli_mda_lane1.fa
+#p=data/hs_ref/chr21.reads-mate-30-0.01-100-500
+

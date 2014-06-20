@@ -1,0 +1,7 @@
+#! /usr/bin/perl
+
+$basedir=`dirname $0`;
+chop($basedir);
+
+system "$basedir/../bin/parallel_rna_blat $ARGV[0] $ARGV[1]";
+system "$basedir/../bin/validate_rna $ARGV[0] $ARGV[1] --min_contig $ARGV[3] --complete_rate $ARGV[2]";

@@ -1,0 +1,49 @@
+#! /usr/bin/perl
+
+$prefix = $ARGV[0];
+$read = $ARGV[1];
+
+$stat = $prefix . ".stat";
+
+sub run_tidba
+{
+	($k) = @_;
+
+	$min_count = 4;
+
+        $cmd = "bin/tidba -r $read -o $prefix-$k --minCount $min_count --mink $k >> $stat";
+	printf("$cmd\n");
+	system($cmd);
+
+	$cmd = "rm $prefix-$k.kmer $prefix-$k.align";
+	printf("$cmd\n");
+	system($cmd);
+}
+
+$cmd = "rm $stat";
+printf("$cmd\n");
+system($cmd);
+
+for ($k = 25; $k <= 50; $k += 5)
+{
+	run_tidba($k)
+}
+
+$prefix = $ARGV[0];
+
+$cmd = "cat $prefix-[0-9][05]-isoforms.fa > $prefix-all.fa";
+print $md, "\n";
+system($cmd);
+
+$cmd = "bin/filterContigs $prefix-all.fa $prefix-all.fa-filtered";
+print $md, "\n";
+system($cmd);
+
+$cmd = "cd-hit-est -i $prefix-all.fa-filtered -o $prefix-cd-hit -M 0";
+print $md, "\n";
+system($cmd);
+
+$cmd = "bin/cluster2fa $prefix-cd-hit.clstr $prefix-all.fa-filtered $prefix-cluster.fa";
+print $md, "\n";
+system($cmd);
+

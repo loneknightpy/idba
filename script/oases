@@ -1,0 +1,3 @@
+velveth $1 $2 $3
+velvetg $1 -read_trkg yes
+oases $1

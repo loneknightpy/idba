@@ -1,0 +1,45 @@
+#! /usr/bin/perl 
+
+$reads = $ARGV[0];
+$directory = $ARGV[1];
+$mink = 25;
+$maxk = 60;
+$local_maxk = 120;
+$min_contig = 150;
+
+#$cmd = "bin/idba -r $reads -o $directory --mink $mink --maxk $maxk";
+#print $cmd, "\n";
+#system ($cmd);
+#
+#$cmd = "bin/filter_sequences $directory/contig.fa $directory/contig-filtered.fa --min_contig $min_contig";
+#print $cmd, "\n";
+#system ($cmd);
+#
+#$cmd = "bin/align $directory/contig-filtered.fa $reads $directory/align --similar 0.8";
+#print $cmd, "\n";
+#system ($cmd);
+#
+#$cmd = "bin/local_assembly -r $reads -o $directory";
+#print $cmd, "\n";
+#system ($cmd);
+#
+#$cmd = "bin/idba -l $directory/local-contig.fa -o $directory-local --min_count 0 --min_cover 0 --min_support 1 --mink $maxk --maxk $local_maxk";
+#print $cmd, "\n";
+#system ($cmd);
+
+$cmd = "bin/filter_sequences $directory-local/contig.fa $directory-local/contig-filtered.fa --min_contig $min_contig";
+print $cmd, "\n";
+system ($cmd);
+
+$cmd = "bin/align $directory-local/contig-filtered.fa $reads $directory-local/align --similar 0.95";
+print $cmd, "\n";
+system ($cmd);
+
+$cmd = "bin/local_assembly -r $reads -o $directory-local";
+print $cmd, "\n";
+system ($cmd);
+
+$cmd = "bin/idba -l $directory-local/local-contig.fa -o $directory-local-long --min_count 0 --min_cover 0 --min_support 1 --mink $maxk --maxk $local_maxk";
+print $cmd, "\n";
+system ($cmd);
+
