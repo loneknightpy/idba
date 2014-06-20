@@ -28,7 +28,7 @@ class Kmer;
 class ShortSequence
 {
 public:
-    ShortSequence() { data_[kNumBytes-1] = 0; }
+    ShortSequence() { data_[kNumBytes-2] = data_[kNumBytes-1] = 0; }
     ShortSequence(const ShortSequence &short_seq) 
     { Assign(short_seq); }
     explicit ShortSequence(const Sequence &seq, int offset = 0, size_t length = std::string::npos) 
@@ -65,9 +65,12 @@ public:
         }
     }
 
-    uint32_t size() const { return data_[kNumBytes-1]; }
-    void resize(uint32_t new_size) { data_[kNumBytes-1] = new_size; }
-    bool empty() const { return data_[kNumBytes-1] == 0; }
+    uint32_t size() const 
+    { return data_[kNumBytes-2] + (data_[kNumBytes-1] << 8); }
+    void resize(uint32_t new_size) 
+    { data_[kNumBytes-2] = (new_size & ((1<<8)-1)); data_[kNumBytes-1] = (new_size >> 8); }
+    bool empty() const 
+    { return data_[kNumBytes-2] == 0 && data_[kNumBytes-1] == 0; }
     static uint32_t max_size() { return kMaxShortSequence; }
 
     bool operator ==(const ShortSequence &seq) const
@@ -97,7 +100,7 @@ public:
     }
 
     static const uint32_t kMaxShortSequence = 128;
-    static const uint32_t kNumBytes = (kMaxShortSequence + 3) / 4 + 1;
+    static const uint32_t kNumBytes = (kMaxShortSequence + 3) / 4 + 2;
 
 private:
     uint8_t data_[kNumBytes];

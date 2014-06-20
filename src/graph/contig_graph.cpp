@@ -35,7 +35,7 @@ double ContigGraph::Binormial(int n, int m)
 void ContigGraph::InitializeTable()
 {
     const double err = 0.01;
-    double p_err = err/3 * pow(1-err, kmer_size_-1);
+    double p_err = err/3 * pow(1-err, double(kmer_size_-1));
 
     for (int m = 1; m < 10; ++m)
     {

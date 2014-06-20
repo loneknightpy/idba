@@ -57,6 +57,7 @@ struct IDBAOption
     int num_threads;
     int min_pairs;
     int max_gap;
+    bool is_no_bubble;
     bool is_no_local;
     bool is_no_coverage;
     bool is_no_correct;
@@ -65,7 +66,7 @@ struct IDBAOption
 
     IDBAOption()
     {
-        extra_read_files.resize(5);
+        extra_read_files.resize(4);
         directory = "out";
         mink = 20;
         maxk = 100;
@@ -82,6 +83,7 @@ struct IDBAOption
         num_threads = 0;
         min_pairs = 3;
         max_gap = 50;
+        is_no_bubble = false;
         is_no_local = false;
         is_no_coverage = false;
         is_no_correct = false;
@@ -145,7 +147,6 @@ int main(int argc, char *argv[])
     desc.AddOption("read_level_3", "", option.extra_read_files[1], "paired-end reads fasta for third level scaffolds");
     desc.AddOption("read_level_4", "", option.extra_read_files[2], "paired-end reads fasta for fourth level scaffolds");
     desc.AddOption("read_level_5", "", option.extra_read_files[3], "paired-end reads fasta for fifth level scaffolds");
-    desc.AddOption("read_level_6", "", option.extra_read_files[4], "paired-end reads fasta for fifth level scaffolds");
     desc.AddOption("long_read", "l", option.long_read_file, FormatString("fasta long read file (>%d)", ShortSequence::max_size()));
     //desc.AddOption("reference", "", option.reference, "reference genome");
     desc.AddOption("mink", "", option.mink, FormatString("minimum k value (<=%d)", Kmer::max_size()));
@@ -163,6 +164,7 @@ int main(int argc, char *argv[])
     desc.AddOption("max_mismatch", "", option.max_mismatch, "max mismatch of error correction");
     desc.AddOption("min_pairs", "", option.min_pairs, "minimum number of pairs");
     //desc.AddOption("max_gap", "", option.max_gap, "maximum gap in reference");
+    desc.AddOption("no_bubble", "", option.is_no_bubble, "do not merge bubble");
     desc.AddOption("no_local", "", option.is_no_local, "do not use local assembly");
     desc.AddOption("no_coverage", "", option.is_no_coverage, "do not iterate on coverage");
     desc.AddOption("no_correct", "", option.is_no_correct, "do not do correction");
@@ -336,10 +338,13 @@ void Assemble(HashGraph &hash_graph)
     contig_infos.clear();
 
     contig_graph.RemoveDeadEnd(option.min_contig);
-    int bubble = contig_graph.RemoveBubble();
-    cout << "merge bubble " << bubble << endl;
 
-    contig_graph.MergeSimilarPath();
+    if (!option.is_no_bubble) 
+    {
+        int bubble = contig_graph.RemoveBubble();
+        cout << "merge bubble " << bubble << endl;
+        contig_graph.MergeSimilarPath();
+    }
 
     if (!option.is_no_coverage)
         contig_graph.RemoveLocalLowCoverage(min_cover, option.min_contig, 0.1);
