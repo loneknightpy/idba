@@ -100,7 +100,7 @@ if __name__ == "__main__":
         print "noinst_LIBRARIES = \\\n\t" + " \\\n\t".join(noninstall), "\n"
 
     elif (sys.argv[1] == "bin"):
-        params["LIBS"] = "$(top_srcdir)/lib/libassembly.a";
+        params["LIBS"] = "$(top_srcdir)/lib/libassembly.a @LIBS@";
         print ParamsToString(params)
         print ScanBinary(["src/tools"], "\.cpp$"), "\n"
         print ScanBinary(["src/release"], "\.cpp$"), "\n"
@@ -110,7 +110,7 @@ if __name__ == "__main__":
         print "noinst_PROGRAMS = \\\n\t" + " \\\n\t".join(noninstall), "\n"
 
     elif (sys.argv[1] == "release"):
-        params["LIBS"] = "$(top_srcdir)/lib/libassembly.a";
+        params["LIBS"] = "$(top_srcdir)/lib/libassembly.a @LIBS@";
         print ParamsToString(params)
         print ScanBinary(["src/release"], "\.cpp$"), "\n"
 
@@ -119,7 +119,7 @@ if __name__ == "__main__":
         print "noinst_PROGRAMS = \\\n\t" + " \\\n\t".join(noninstall), "\n"
 
     elif (sys.argv[1] == "test"):
-        params["LIBS"] = "$(top_srcdir)/lib/libassembly.a $(top_srcdir)/lib/libgtest.a";
+        params["LIBS"] = "$(top_srcdir)/lib/libassembly.a $(top_srcdir)/lib/libgtest.a @LIBS@";
         print ParamsToString(params)
         print ScanBinary(["src/test"], "\.cpp$"), "\n"
 

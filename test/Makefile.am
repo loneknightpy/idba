@@ -1,5 +1,5 @@
 AM_LDFLAGS = -fopenmp -pthread
-LIBS = $(top_srcdir)/lib/libassembly.a $(top_srcdir)/lib/libgtest.a
+LIBS = $(top_srcdir)/lib/libassembly.a $(top_srcdir)/lib/libgtest.a @LIBS@
 AM_CXXFLAGS = -Wall -O3 -fopenmp -pthread
 INCLUDES =  -I$(top_srcdir)/src -I$(top_srcdir)/gtest_src 
 

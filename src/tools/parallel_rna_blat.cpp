@@ -61,7 +61,7 @@ void Append(const string &in_file, const string &out_file)
 
 void SplitSequenceFile()
 {
-    FastaWriter writers[num_threads];
+    FastaWriter *writers = static_cast<FastaWriter *>(alloca(sizeof(FastaWriter) * num_threads));
     for (int i = 0; i < num_threads; ++i)
         writers[i].Open(split_files[i]);
 

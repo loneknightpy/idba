@@ -35,6 +35,24 @@ public:
     bool operator ==(const AtomicInteger<T> &x) const { return value_ == x.value_; }
     bool operator !=(const AtomicInteger<T> &x) const { return value_ != x.value_; }
 
+#   if defined(__mips__) && !defined(__mips64)
+
+    T operator += (T x) { return __atomic_add_fetch(&value_, x,__ATOMIC_SEQ_CST); }
+    T operator -= (T x) { return __atomic_sub_fetch(&value_, x, __ATOMIC_SEQ_CST); }
+    T operator |= (T x) { return __atomic_or_fetch(&value_, x, __ATOMIC_SEQ_CST); }
+    T operator &= (T x) { return __atomic_and_fetch(&value_, x, __ATOMIC_SEQ_CST); }
+    T operator ^= (T x) { return __atomic_xor_fetch(&value_, x, __ATOMIC_SEQ_CST); }
+
+    T operator ++() { return __atomic_add_fetch(&value_, 1, __ATOMIC_SEQ_CST); }
+    T operator ++(int) { return __atomic_fetch_add(&value_, 1, __ATOMIC_SEQ_CST); }
+    T operator --() { return __atomic_sub_fetch(&value_, 1, __ATOMIC_SEQ_CST); }
+    T operator --(int) { return __atomic_fetch_sub(&value_, 1, __ATOMIC_SEQ_CST); }
+ 
+    bool CompareAndSet(T old_value, T new_value)
+    { return __atomic_compare_exchange(&value_, &old_value, &new_value, false, __ATOMIC_SEQ_CST, __ATOMIC_SEQ_CST); }
+
+#   else
+
     T operator += (T x) { return __sync_add_and_fetch(&value_, x); }
     T operator -= (T x) { return __sync_sub_and_fetch(&value_, x); }
     T operator |= (T x) { return __sync_or_and_fetch(&value_, x); }
@@ -48,6 +66,8 @@ public:
 
     bool CompareAndSet(T old_value, T new_value)
     { return __sync_bool_compare_and_swap(&value_, old_value, new_value); }
+
+#   endif
 
     void swap(AtomicInteger &x) 
     { if (this != &x) std::swap(value_, x.value_); }
