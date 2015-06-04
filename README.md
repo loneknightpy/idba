@@ -14,8 +14,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-Yu Peng (loneknightpy@gmail.com)
-
 ## Requirement
 
 This software is suitable for all unix-like system with gcc installed.
@@ -76,5 +74,13 @@ $ bin/fq2fa --paired --filter read.fq read.fa
 
 The this tools assume the paired-end reads are in order (->, <-). If your data is in order (<-, ->), 
 please convert it by yourself.
+
+## IDBA on Docker
+A docker image was built for IDBA. Please use the follow command to run IDBA-UD on Docker (Assuming
+the input read file is in current directory). **If you are using Mac os, please try this because
+there is some compatability issue with Mac gcc.**
+```
+$ docker run -v `pwd`:/data -w /data loneknightpy/idba idba_ud  -r read.fa -o output
+```
 
 
