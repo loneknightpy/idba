@@ -78,7 +78,7 @@ please convert it by yourself.
 ## IDBA on Docker
 A docker image was built for IDBA. Please use the follow command to run IDBA-UD on Docker (Assuming
 the input read file is in current directory). **If you are using Mac os, please try this because
-there is some compatability issue with Mac gcc.**
+there is some compatibility issue with Mac gcc.**
 ```
 $ docker run -v `pwd`:/data -w /data loneknightpy/idba idba_ud  -r read.fa -o output
 ```

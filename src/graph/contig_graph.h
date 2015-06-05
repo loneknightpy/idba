@@ -260,6 +260,8 @@ private:
     double FindSimilarPath(ContigGraphVertexAdaptor target, ContigGraphVertexAdaptor start);
     double FindSimilarPath(ContigGraphVertexAdaptor target, ContigGraphPath &path, int &time);
 
+    static const uint32_t kMaxCheckSimilarity = 1024;
+
     HashMap<Kmer, uint32_t> begin_kmer_map_;
     std::deque<ContigGraphVertex> vertices_;
     uint64_t num_edges_;

@@ -219,7 +219,6 @@ void ContigGraph::MergeSimilarPath()
 
             if (current.out_edges().size() > 1)
             {
-                ContigGraphVertexAdaptor end(NULL);
                 deque<ContigGraphVertexAdaptor> neighbors;
                 GetNeighbors(current, neighbors);
                 sort(neighbors.begin(), neighbors.end(), CompareContigCoverage);
@@ -247,7 +246,6 @@ void ContigGraph::MergeSimilarPath()
     }
     Refresh();
     MergeSimplePaths();
-
 }
 
 int64_t ContigGraph::Prune(int min_length)
@@ -1244,6 +1242,9 @@ void ContigGraph::GetContigs(deque<Sequence> &contigs, deque<ContigInfo> &contig
 
 double ContigGraph::GetSimilarity(const Sequence &a, const Sequence &b)
 {
+    if (a.size() >= kMaxCheckSimilarity || b.size() > kMaxCheckSimilarity)
+        return 0;
+
     vector<vector<int> > table;
     table.resize(a.size() + 1);
     for (unsigned i = 0; i < table.size(); ++i)
