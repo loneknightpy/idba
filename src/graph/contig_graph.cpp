@@ -37,6 +37,11 @@ void ContigGraph::InitializeTable()
     const double err = 0.01;
     double p_err = err/3 * pow(1-err, double(kmer_size_-1));
 
+    p_table.resize(10);
+    for (unsigned i = 0; i < 10; ++i) {
+        p_table.resize(1000);
+    }
+
     for (int m = 1; m < 10; ++m)
     {
         for (int x = 1; x < 1000; ++x)
@@ -1471,5 +1476,4 @@ double ContigGraph::FindSimilarPath(ContigGraphVertexAdaptor target, ContigGraph
         return maximum;
     }
 }
-
 
