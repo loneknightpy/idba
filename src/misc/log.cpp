@@ -48,7 +48,7 @@ LogProcess::LogProcess(const string &log_file)
         dup2(pipe_fds[0], STDIN_FILENO);
         close(pipe_fds[0]);
 
-        char line[kMaxLine];
+        char *line = new char[kMaxLine];
         FILE *flog = OpenFile(log_file, "wb");
         while (fgets(line, kMaxLine, stdin) != NULL)
         {
@@ -57,6 +57,7 @@ LogProcess::LogProcess(const string &log_file)
             fflush(NULL);
         }
         
+        delete[] line;
         exit(0);
     }
     else
@@ -114,7 +115,7 @@ void *LogThread::LogThreadFunc(void *p)
 
     FILE *flog = OpenFile(log_thread.log_file_, "wb");
 
-    char line[kMaxLine];
+    char *line = new char[kMaxLine];
     int len = 0;
     while ((len = read(log_thread.in_fd, line, kMaxLine)) > 0)
     {
@@ -124,6 +125,6 @@ void *LogThread::LogThreadFunc(void *p)
     }
     fclose(flog);
 
+    delete[] line;
     return p;
 }
-
