@@ -21,6 +21,10 @@ This software is suitable for all unix-like system with gcc installed.
 
 ## Installation Guide
 
+### If you checkout the repo directly.
+$ ./build.sh
+
+### If you use the release package.
 Exract the package, then use make to compile the source code.
 ```
 $ ./configure
@@ -30,12 +34,12 @@ $ make
 
 ## Introduction
 
-IDBA is the basic iterative de Bruijn graph assembler for second-generation sequencing reads. 
-IDBA-UD, an extension of IDBA, is designed to utilize paired-end reads to assemble low-depth 
-regions and use progressive depth on contigs to reduce errors in high-depth regions. It is a 
-generic purpose assembler and epspacially good for single-cell and metagenomic sequencing data. 
-IDBA-Hybrid is another update version of IDBA-UD, which can make use of a similar reference 
-genome to improve assembly result. IDBA-Tran is an iterative de Bruijn graph assembler for 
+IDBA is the basic iterative de Bruijn graph assembler for second-generation sequencing reads.
+IDBA-UD, an extension of IDBA, is designed to utilize paired-end reads to assemble low-depth
+regions and use progressive depth on contigs to reduce errors in high-depth regions. It is a
+generic purpose assembler and epspacially good for single-cell and metagenomic sequencing data.
+IDBA-Hybrid is another update version of IDBA-UD, which can make use of a similar reference
+genome to improve assembly result. IDBA-Tran is an iterative de Bruijn graph assembler for
 RNA-Seq data.
 
 The basic IDBA is included for comparison, you should use more specific assemblers for your data.
@@ -46,8 +50,8 @@ If you are assembling transcriptome data, please use IDBA-Tran.
 
 ## Comments
 
-Note that IDBA assemblers are designed for short reads (around 100bp). If you want to assemble 
-paired-end reads with longer read length, please modify the constant kMaxShortSequence in 
+Note that IDBA assemblers are designed for short reads (around 100bp). If you want to assemble
+paired-end reads with longer read length, please modify the constant kMaxShortSequence in
 src/sequence/short_sequence.h to support longer read length.
 
 Please find the manual by running the assembler without any parameters. For example:
@@ -55,7 +59,7 @@ Please find the manual by running the assembler without any parameters. For exam
 $ bin/idba
 ```
 
-IDBA series assemblers accept fasta format reads. Fastq format reads can be converted by 
+IDBA series assemblers accept fasta format reads. Fastq format reads can be converted by
 fq2fa program in the packcage.
 ```
 $ bin/fq2fa read.fq read.fa
@@ -72,13 +76,13 @@ or convert a FastQ read file to FastA file.
 $ bin/fq2fa --paired --filter read.fq read.fa
 ```
 
-The this tools assume the paired-end reads are in order (->, <-). If your data is in order (<-, ->), 
+The this tools assume the paired-end reads are in order (->, <-). If your data is in order (<-, ->),
 please convert it by yourself.
 
 ## IDBA on Docker
 A docker image was built for IDBA. Please use the follow command to run IDBA-UD on Docker (Assuming
-the input read file is in current directory). **If you are using Mac os, please try this because
-there is some compatibility issue with Mac gcc.**
+the input read file is in current directory). **If you are using Mac os and see bus error, please try
+this image.**
 ```
 $ docker run -v `pwd`:/data -w /data loneknightpy/idba idba_ud  -r read.fa -o output
 ```
