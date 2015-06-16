@@ -1031,7 +1031,8 @@ void CorrectContigs(AssemblyInfo &assembly_info, std::deque<Sequence> &contigs,
     }
 
     FILE *falign = OpenFile(align_file, "rb");
-    deque<ShortSequence> &reads = assembly_info.reads;
+    //deque<ShortSequence> &reads = assembly_info.reads;
+    auto &reads = assembly_info.reads;
 
     int64_t buffer_size = (1 << 20) * omp_get_max_threads();
     for (int64_t offset = 0; offset < (int64_t)reads.size(); offset += buffer_size)

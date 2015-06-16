@@ -55,8 +55,8 @@ if __name__ == "__main__":
         Usage()
         exit(1)
 
-    params["AM_CXXFLAGS"] = "-Wall -O3 -fopenmp -pthread"
-    params["AM_LDFLAGS"] = "-fopenmp -pthread"
+    params["AM_CXXFLAGS"] = "-Wall -O3 -fopenmp -pthread -std=c++0x"
+    params["AM_LDFLAGS"] = "-fopenmp -pthread -std=c++0x"
     params["INCLUDES"] = " " \
             + "-I$(top_srcdir)/src " \
             + "-I$(top_srcdir)/gtest_src "

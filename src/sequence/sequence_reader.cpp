@@ -31,27 +31,27 @@ bool SequenceReader::Read(Sequence &seq)
 {
     string comment;
     string quality;
-    return ReadRecord(seq, comment, quality);
+    return (bool)ReadRecord(seq, comment, quality);
 }
 
 bool SequenceReader::Read(Sequence &seq, string &comment)
 {
     string quality;
-    return ReadRecord(seq, comment, quality);
+    return (bool)ReadRecord(seq, comment, quality);
 }
 
 bool SequenceReader::Read(Sequence &seq, string &comment, string &quality)
 {
-    return ReadRecord(seq, comment, quality);
+    return (bool)ReadRecord(seq, comment, quality);
 }
 
 bool FastaReader::ReadRecord(Sequence &seq, string &comment, string &quality)
 {
-    return ReadFasta(*is_, seq, comment);
+    return (bool)ReadFasta(*is_, seq, comment);
 }
 
 bool FastqReader::ReadRecord(Sequence &seq, string &comment, string &quality)
 {
-    return ReadFastq(*is_, seq, comment, quality);
+    return (bool)ReadFastq(*is_, seq, comment, quality);
 }
 
