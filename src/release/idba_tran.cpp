@@ -49,6 +49,7 @@ struct IDBAOption
     int min_count;
     int min_support;
     int min_contig;
+    int min_transcript;
     double similar;
     int max_mismatch;
     int seed_kmer_size;
@@ -75,6 +76,7 @@ struct IDBAOption
         min_count = 2;
         min_support = 1;
         min_contig = 200;
+        min_transcript = 300;
         similar = 0.95;
         max_mismatch = 3;
         seed_kmer_size = 30;
@@ -236,7 +238,7 @@ void FindIsoforms(ContigGraphPath &path, deque<ContigGraphPath> &isoforms, Conti
     {
         bool flag = true;
 
-        if (flag && path.size() > 300)
+        if (flag && path.size() > option.min_transcript)
         {
             isoforms.push_back(path);
         }
@@ -300,6 +302,7 @@ int main(int argc, char *argv[])
     desc.AddOption("num_threads", "", option.num_threads, "number of threads");
     desc.AddOption("seed_kmer", "", option.seed_kmer_size, "seed kmer size for alignment");
     desc.AddOption("min_contig", "", option.min_contig, "minimum size of contig");
+    desc.AddOption("min_transcript", "", option.min_transcript, "minimum size of transcript");
     desc.AddOption("similar", "", option.similar, "similarity for alignment");
     desc.AddOption("max_mismatch", "", option.max_mismatch, "max mismatch of error correction");
     //desc.AddOption("min_pairs", "", option.min_pairs, "minimum number of pairs");
@@ -517,7 +520,7 @@ void Assemble(HashGraph &hash_graph)
     int index = 0;
     for (unsigned i = 0; i < transcripts.size(); ++i)
     {
-        if (transcripts[i].size() >= 300)
+        if (transcripts[i].size() >= option.min_transcript)
         {
             transcript_paths[index] = transcript_paths[i];
             transcripts[index++] = transcripts[i];
