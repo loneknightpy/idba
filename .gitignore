@@ -14,3 +14,4 @@ script/Makefile
 script/Makefile.in
 aclocal.m4
 config.h
+bazel-*
