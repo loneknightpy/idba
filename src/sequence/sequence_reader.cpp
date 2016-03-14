@@ -47,11 +47,11 @@ bool SequenceReader::Read(Sequence &seq, string &comment, string &quality)
 
 bool FastaReader::ReadRecord(Sequence &seq, string &comment, string &quality)
 {
-    return ReadFasta(*is_, seq, comment);
+    return ReadFasta(*is_, seq, comment).good();
 }
 
 bool FastqReader::ReadRecord(Sequence &seq, string &comment, string &quality)
 {
-    return ReadFastq(*is_, seq, comment, quality);
+    return ReadFastq(*is_, seq, comment, quality).good();
 }
 

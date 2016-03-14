@@ -46,11 +46,11 @@ bool SequenceWriter::Write(const Sequence &seq, const string &comment, const str
 
 bool FastaWriter::WriteRecord(const Sequence &seq, const string &comment, const string &quality)
 {
-    return WriteFasta(*os_, seq, comment);
+    return WriteFasta(*os_, seq, comment).good();
 }
 
 bool FastqWriter::WriteRecord(const Sequence &seq, const string &comment, const string &quality)
 {
-    return WriteFastq(*os_, seq, comment, quality);
+    return WriteFastq(*os_, seq, comment, quality).good();
 }
 
