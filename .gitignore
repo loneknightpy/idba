@@ -1,2 +1,17 @@
 .*
 *~
+test/
+bin/
+lib/
+autom4te.cache/
+config.log
+config.status
+configure
+Makefile
+Makefile.in
+compile
+script/Makefile
+script/Makefile.in
+aclocal.m4
+config.h
+bazel-*
