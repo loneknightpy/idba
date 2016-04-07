@@ -44,7 +44,7 @@ int main(int argc, char *argv[])
         cerr << "fq2fa - Filter out fasta sequence containing N." << endl;
         cerr << "Usage: filterfa tmp.fa out.fa " << endl;
         cerr << "       filterfa --paired tmp.fa out.fa" << endl;
-        cerr << "       filterfa --merged tmp_1.fa tmp_2.fa out.fa" << endl;
+        cerr << "       filterfa --merge tmp_1.fa tmp_2.fa out.fa" << endl;
         cerr << "Allowed Options: " << endl;
         cerr << desc << endl;
         exit(1);
