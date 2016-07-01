@@ -16,7 +16,7 @@ sequence_unittest_SOURCES = $(top_srcdir)/src/test/sequence_unittest.cpp
 short_sequence_unittest_SOURCES = $(top_srcdir)/src/test/short_sequence_unittest.cpp
 hash_map_unittest_SOURCES = $(top_srcdir)/src/test/hash_map_unittest.cpp 
 
-noinst_PROGRAMS = \
+check_PROGRAMS = \
 	compact_sequence_unittest \
 	hash_table_unittest \
 	bit_edges_unittest \
@@ -30,3 +30,4 @@ noinst_PROGRAMS = \
 	short_sequence_unittest \
 	hash_map_unittest 
 
+TESTS=$(check_PROGRAMS)
