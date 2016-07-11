@@ -2,10 +2,10 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
-AC_INIT(idba, 1.1.2, loneknightpy@gmail.com)
+AC_INIT(idba, 1.1.3, loneknightpy@gmail.com)
 AC_CONFIG_SRCDIR([src/basic/kmer.h])
 AC_CONFIG_HEADER([config.h])
-AM_INIT_AUTOMAKE(idba, 1.1.2)
+AM_INIT_AUTOMAKE(idba, 1.1.3)
 
 # Checks for programs.
 AC_PROG_CXX
