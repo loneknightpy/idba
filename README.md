@@ -14,7 +14,7 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
-## Requirement
+## Requirements
 
 This software is suitable for all unix-like system with gcc installed.
 
@@ -25,7 +25,7 @@ This software is suitable for all unix-like system with gcc installed.
 $ ./build.sh
 
 ### If you use the release package.
-Exract the package, then use make to compile the source code.
+Extract the package, then use make to compile the source code.
 ```
 $ ./configure
 $ make
@@ -37,7 +37,7 @@ $ make
 IDBA is the basic iterative de Bruijn graph assembler for second-generation sequencing reads.
 IDBA-UD, an extension of IDBA, is designed to utilize paired-end reads to assemble low-depth
 regions and use progressive depth on contigs to reduce errors in high-depth regions. It is a
-generic purpose assembler and epspacially good for single-cell and metagenomic sequencing data.
+generic purpose assembler and especially good for single-cell and metagenomic sequencing data.
 IDBA-Hybrid is another update version of IDBA-UD, which can make use of a similar reference
 genome to improve assembly result. IDBA-Tran is an iterative de Bruijn graph assembler for
 RNA-Seq data.
@@ -59,29 +59,29 @@ Please find the manual by running the assembler without any parameters. For exam
 $ bin/idba
 ```
 
-IDBA series assemblers accept fasta format reads. Fastq format reads can be converted by
-fq2fa program in the packcage.
+IDBA series assemblers accept FASTA format reads. FASTQ format reads can be converted by
+fq2fa program in the package.
 ```
 $ bin/fq2fa read.fq read.fa
 ```
 
-IDBA-UD IDBA-Hybrid and IDBA-Tran require paired-end reads stored in single FastA file and a pair of
-reads is in consecutive two lines. If not, please use fq2fa to merge two
-FastQ read files to single file.
+IDBA-UD, IDBA-Hybrid and IDBA-Tran require paired-end reads stored in the same FASTA file. A pair of
+reads should be in two consecutive lines. If not, please use fq2fa to merge two
+FASTQ read files to single file.
 ```
 $ bin/fq2fa --merge --filter read_1.fq read_2.fq read.fa
 ```
-or convert a FastQ read file to FastA file.
+or convert a FASTQ read file to FASTA file.
 ```
 $ bin/fq2fa --paired --filter read.fq read.fa
 ```
 
-The this tools assume the paired-end reads are in order (->, <-). If your data is in order (<-, ->),
+This tool assumes that the paired-end reads are in order (->, <-). If your data is in reverse order (<-, ->),
 please convert it by yourself.
 
 ## IDBA on Docker
-A docker image was built for IDBA. Please use the follow command to run IDBA-UD on Docker (Assuming
-the input read file is in current directory). **If you are using Mac os and see bus error, please try
+A docker image was built for IDBA. Please use the following command to run IDBA-UD on Docker (assuming
+the input read file is in the current directory). **If you are using Mac OS and see bus error, please try
 this image.**
 ```
 $ docker run -v `pwd`:/data -w /data loneknightpy/idba idba_ud  -r read.fa -o output
