@@ -228,12 +228,13 @@ int64_t SimulateReads(Sequence &ref, int num_reads, FastaWriter &writer)
 
             int offset = 0;
             Sequence seq;
-            //while (true)
+            while (true)
             {
                 offset = rand() % (ref.size() + 1 - insert_distance - d);
-                seq.Assign(ref, offset, insert_distance + d);
-//                if (seq.IsValid())
-//                    break;
+                if(offset>0){
+					seq.Assign(ref, offset, insert_distance + d);
+					break;
+				}
             }
 
             seq1.Assign(seq, 0, read_length);
@@ -274,9 +275,11 @@ int64_t SimulateReads(Sequence &ref, int num_reads, FastaWriter &writer, FastaWr
             while (true)
             {
                 offset = rand() % (ref.size() - read_length + 1);
-                seq.Assign(ref, offset, read_length);
-                if (seq.IsValid())
-                    break;
+                if(offset>=0){
+					seq.Assign(ref, offset, read_length);
+					if (seq.IsValid())
+						break;
+				}
             }
 
             Sequence correct_seq(seq);
@@ -304,9 +307,11 @@ int64_t SimulateReads(Sequence &ref, int num_reads, FastaWriter &writer, FastaWr
             while (true)
             {
                 offset = rand() % (ref.size() + 1 - insert_distance - d);
-                seq.Assign(ref, offset, insert_distance + d);
-                if (seq.IsValid())
-                    break;
+                if(offset>=0){
+					seq.Assign(ref, offset, insert_distance + d);
+					if (seq.IsValid())
+						break;
+				}
             }
 
             seq1.Assign(seq, 0, read_length);
