@@ -228,27 +228,27 @@ int64_t SimulateReads(Sequence &ref, int num_reads, FastaWriter &writer)
 
             int offset = 0;
             Sequence seq;
-            while (true)
+            //while (true)
             {
                 offset = rand() % (ref.size() + 1 - insert_distance - d);
-                if(offset>0){
-					seq.Assign(ref, offset, insert_distance + d);
-					break;
-				}
+                seq.Assign(ref, offset, insert_distance + d);
+//                if (seq.IsValid())
+//                    break;
             }
+			if(seq.size()>read_length){
+				seq1.Assign(seq, 0, read_length);
+				seq2.Assign(seq, seq.size() - read_length, read_length);
+				seq2.ReverseComplement();
 
-            seq1.Assign(seq, 0, read_length);
-            seq2.Assign(seq, seq.size() - read_length, read_length);
-            seq2.ReverseComplement();
+				SimulateErrors(seq1);
+				SimulateErrors(seq2);
 
-            SimulateErrors(seq1);
-            SimulateErrors(seq2);
+				if (rand() < RAND_MAX/2)
+					swap(seq1, seq2);
 
-            if (rand() < RAND_MAX/2)
-                swap(seq1, seq2);
-
-            writer.Write(seq2, FormatString("read%d_%d/1", ref_id, read_id));
-            writer.Write(seq1, FormatString("read%d_%d/2", ref_id, read_id));
+				writer.Write(seq2, FormatString("read%d_%d/1", ref_id, read_id));
+				writer.Write(seq1, FormatString("read%d_%d/2", ref_id, read_id));
+			}
             read_id += 2;
         }
     }
@@ -275,11 +275,9 @@ int64_t SimulateReads(Sequence &ref, int num_reads, FastaWriter &writer, FastaWr
             while (true)
             {
                 offset = rand() % (ref.size() - read_length + 1);
-                if(offset>=0){
-					seq.Assign(ref, offset, read_length);
-					if (seq.IsValid())
-						break;
-				}
+                seq.Assign(ref, offset, read_length);
+                if (seq.IsValid())
+                    break;
             }
 
             Sequence correct_seq(seq);
@@ -307,11 +305,9 @@ int64_t SimulateReads(Sequence &ref, int num_reads, FastaWriter &writer, FastaWr
             while (true)
             {
                 offset = rand() % (ref.size() + 1 - insert_distance - d);
-                if(offset>=0){
-					seq.Assign(ref, offset, insert_distance + d);
-					if (seq.IsValid())
-						break;
-				}
+                seq.Assign(ref, offset, insert_distance + d);
+                if (seq.IsValid())
+                    break;
             }
 
             seq1.Assign(seq, 0, read_length);
