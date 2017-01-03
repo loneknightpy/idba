@@ -235,19 +235,20 @@ int64_t SimulateReads(Sequence &ref, int num_reads, FastaWriter &writer)
 //                if (seq.IsValid())
 //                    break;
             }
+			if(seq.size()>read_length){
+				seq1.Assign(seq, 0, read_length);
+				seq2.Assign(seq, seq.size() - read_length, read_length);
+				seq2.ReverseComplement();
 
-            seq1.Assign(seq, 0, read_length);
-            seq2.Assign(seq, seq.size() - read_length, read_length);
-            seq2.ReverseComplement();
+				SimulateErrors(seq1);
+				SimulateErrors(seq2);
 
-            SimulateErrors(seq1);
-            SimulateErrors(seq2);
+				if (rand() < RAND_MAX/2)
+					swap(seq1, seq2);
 
-            if (rand() < RAND_MAX/2)
-                swap(seq1, seq2);
-
-            writer.Write(seq2, FormatString("read%d_%d/1", ref_id, read_id));
-            writer.Write(seq1, FormatString("read%d_%d/2", ref_id, read_id));
+				writer.Write(seq2, FormatString("read%d_%d/1", ref_id, read_id));
+				writer.Write(seq1, FormatString("read%d_%d/2", ref_id, read_id));
+			}
             read_id += 2;
         }
     }
