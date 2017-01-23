@@ -568,10 +568,13 @@ private:
         if (capacity > buckets_.size() * 2)
         {
             omp_set_lock(&rehash_lock_);
-            size_type new_num_buckets = buckets_.size();
-            while (capacity > new_num_buckets * 2)
-                new_num_buckets *= 2;
-            rehash(new_num_buckets);
+            if (capacity > buckets_.size() * 2) 
+            {
+                size_type new_num_buckets = buckets_.size();
+                while (capacity > new_num_buckets * 2)
+                    new_num_buckets *= 2;
+                rehash(new_num_buckets);
+            }
             omp_unset_lock(&rehash_lock_);
         }
     }
