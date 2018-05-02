@@ -197,7 +197,7 @@ public:
     { return kMaxSize; }
 
 
-    static const uint32_t kNumUint64 = 4;
+    static const uint32_t kNumUint64 = 10;
     static const uint32_t kBitsForSize = ((kNumUint64 <= 2) ? 6 : ((kNumUint64 <= 8) ? 8 : 16));
     static const uint32_t kBitsForKmer = (kNumUint64 * 64 - kBitsForSize);
     static const uint32_t kMaxSize = kBitsForKmer / 2;
