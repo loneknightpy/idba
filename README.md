@@ -31,6 +31,9 @@ $ ./configure
 $ make
 ```
 
+### Install with bioconda
+To install with [bioconda](https://bioconda.github.io/), refer to: https://anaconda.org/bioconda/idba.
+
 
 ## Introduction
 
