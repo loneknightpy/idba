@@ -15,11 +15,11 @@ install = []
 noninstall = []
 
 def Usage():
-    print "Usage: scan.py {bin, lib, test}\n"
+    print("Usage: scan.py {bin, lib, test}\n")
 
 
 def ParamsToString(params):
-    return "".join(["%s = %s\n" % (k, v) for k, v in params.items()])
+    return "".join(["%s = %s\n" % (k, v) for k, v in list(params.items())])
 
 def Scan(paths, pattern):
     files = []
@@ -62,11 +62,11 @@ if __name__ == "__main__":
             + "-I$(top_srcdir)/gtest_src "
     
     if (sys.argv[1] == "lib"):
-        print ParamsToString(params)
+        print(ParamsToString(params))
         #print "noinst_LIBRARIES = libcommon.a libassembly.a\n"
 
         #print ScanLibrary("libcommon.a", ["include/common", "src/common"], "\.cpp$|\.h$"), "\n"
-        print ScanLibrary("libassembly.a", 
+        print(ScanLibrary("libassembly.a", 
                 [#"src/common", "src/common", 
                     "src/basic", 
                     "src/container", 
@@ -74,16 +74,16 @@ if __name__ == "__main__":
                     "src/sequence", 
                     "src/graph", 
                     "src/assembly", ], 
-                "\.cpp$|\.h$"), "\n"
+                "\.cpp$|\.h$"), "\n")
 
-        print "noinst_LIBRARIES = \\\n\t" + " \\\n\t".join(noninstall), "\n"
+        print("noinst_LIBRARIES = \\\n\t" + " \\\n\t".join(noninstall), "\n")
 
     elif (sys.argv[1] == "lib-test"):
-        print ParamsToString(params)
+        print(ParamsToString(params))
         #print "noinst_LIBRARIES = libcommon.a libassembly.a\n"
 
         #print ScanLibrary("libcommon.a", ["include/common", "src/common"], "\.cpp$|\.h$"), "\n"
-        print ScanLibrary("libassembly.a", 
+        print(ScanLibrary("libassembly.a", 
                 [#"src/common", "src/common", 
                     "src/basic", 
                     "src/container", 
@@ -91,39 +91,39 @@ if __name__ == "__main__":
                     "src/sequence", 
                     "src/graph", 
                     "src/assembly", ], 
-                "\.cpp$|\.h$"), "\n"
+                "\.cpp$|\.h$"), "\n")
 
-        print ScanLibrary("libgtest.a", 
+        print(ScanLibrary("libgtest.a", 
                 [ "gtest_src/gtest" ],
-                "\.cpp$|\.h$|.cc$"), "\n"
+                "\.cpp$|\.h$|.cc$"), "\n")
 
-        print "noinst_LIBRARIES = \\\n\t" + " \\\n\t".join(noninstall), "\n"
+        print("noinst_LIBRARIES = \\\n\t" + " \\\n\t".join(noninstall), "\n")
 
     elif (sys.argv[1] == "bin"):
         params["LIBS"] = "$(top_srcdir)/lib/libassembly.a @LIBS@";
-        print ParamsToString(params)
-        print ScanBinary(["src/tools"], "\.cpp$"), "\n"
-        print ScanBinary(["src/release"], "\.cpp$"), "\n"
+        print(ParamsToString(params))
+        print(ScanBinary(["src/tools"], "\.cpp$"), "\n")
+        print(ScanBinary(["src/release"], "\.cpp$"), "\n")
 
         SetInstall("idba_hybrid")
-        print "bin_PROGRAMS = \\\n\t" + " \\\n\t".join(install), "\n"
-        print "noinst_PROGRAMS = \\\n\t" + " \\\n\t".join(noninstall), "\n"
+        print("bin_PROGRAMS = \\\n\t" + " \\\n\t".join(install), "\n")
+        print("noinst_PROGRAMS = \\\n\t" + " \\\n\t".join(noninstall), "\n")
 
     elif (sys.argv[1] == "release"):
         params["LIBS"] = "$(top_srcdir)/lib/libassembly.a @LIBS@";
-        print ParamsToString(params)
-        print ScanBinary(["src/release"], "\.cpp$"), "\n"
+        print(ParamsToString(params))
+        print(ScanBinary(["src/release"], "\.cpp$"), "\n")
 
         SetInstall("idba_hybrid")
-        print "bin_PROGRAMS = \\\n\t" + " \\\n\t".join(install), "\n"
-        print "noinst_PROGRAMS = \\\n\t" + " \\\n\t".join(noninstall), "\n"
+        print("bin_PROGRAMS = \\\n\t" + " \\\n\t".join(install), "\n")
+        print("noinst_PROGRAMS = \\\n\t" + " \\\n\t".join(noninstall), "\n")
 
     elif (sys.argv[1] == "test"):
         params["LIBS"] = "$(top_srcdir)/lib/libassembly.a $(top_srcdir)/lib/libgtest.a @LIBS@";
-        print ParamsToString(params)
-        print ScanBinary(["src/test"], "\.cpp$"), "\n"
+        print(ParamsToString(params))
+        print(ScanBinary(["src/test"], "\.cpp$"), "\n")
 
-        print "noinst_PROGRAMS = \\\n\t" + " \\\n\t".join(noninstall), "\n"
+        print("noinst_PROGRAMS = \\\n\t" + " \\\n\t".join(noninstall), "\n")
 
 
 
